@@ -1,23 +1,25 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Request, Response, Router } from 'express';
-import * as dotenv from 'dotenv'
-dotenv.config()
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const router = Router();
-const key = process.env.KEY as string;
+const key: string = process.env.KEY as string;
 
-async function generateContent(): Promise<AxiosResponse | null> {
+interface ContentData {
+  content: string;
+  length: number;
+  tone: string;
+  keywords: string;
+  audience: string;
+  language: string;
+}
 
-  const prompt = `"Generate a [Content Type] of [Word Count or Length] words with a [Tone and Style] for a [Audience] audience. 
-  Include the following keywords: [Keywords]. 
-  The content should be in [Language]. 
-  Please use the following SEO settings - meta title: [Meta Title], meta description: [Meta Description]. 
-  The structure should follow the [Content Structure] template. 
-  Feel free to include images and media files. 
-  [Advanced Settings] are available for fine-tuning the content generation algorithm. 
-  After generating the content, please provide a 
-  live preview and allow for [Revision and Editing] before finalizing. 
-  Once satisfied, deliver the content in [Content Delivery] format."`
+async function generateContent(data: ContentData): Promise<AxiosResponse | null> {
+  const { content, length, tone, keywords, audience, language } = data;
+  const prompt: string = `Generate a ${content} of ${length} words with a ${tone} tone for a ${audience} audience. 
+  Include the following keywords: ${keywords}. 
+  The content should be in ${language}.`;
 
   const options: AxiosRequestConfig = {
     method: 'POST',
@@ -30,7 +32,7 @@ async function generateContent(): Promise<AxiosResponse | null> {
     data: {
       truncate: 'END',
       return_likelihoods: 'NONE',
-      prompt: 'Please explain to me how LLMs work',
+      prompt: prompt,
     },
   };
 
@@ -44,10 +46,11 @@ async function generateContent(): Promise<AxiosResponse | null> {
 }
 
 router.post('/generateContent', async (req: Request, res: Response) => {
-  console.log(key)
-  const data = await generateContent();
-  if (data) {
-    res.send(data.data);
+  const data: ContentData = req.body;
+  const generatedContent = await generateContent(data);
+
+  if (generatedContent) {
+    res.send(generatedContent.data);
   } else {
     res.status(500).send('Failed to generate content');
   }
