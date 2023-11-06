@@ -1,6 +1,6 @@
 const Audience = () => {
   return (
-    <div className="">Audience</div>
+    <div className="text-xl font-bold">Audience</div>
   )
 }
 

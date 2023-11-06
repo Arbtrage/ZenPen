@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Audience from "./Audience";
-import Content from "./Content";
-import Keywords from "./Keywords";
+import Audience from "../components/Cards/Audience";
+import Content from "../components/Cards/Content";
+import Keywords from "../components/Cards/Keywords";
 
 const components = [
   {
@@ -48,10 +48,10 @@ const Hero = () => {
             </a>
           ))}
         </div>
-        <div className="w-fit">
+        <div className="flex flex-col gap-5 w-fit">
           <h1 className="text-5xl font-bold mb-10 mt-5">{activeComponent.name}</h1>
           <div className="artboard artboard-horizontal phone-1 pb-10" >{activeComponent.component}</div>
-          <div className="flex flex-row gap-5 justify-center">
+          <div className="flex flex-row gap-5 mt-5 justify-center">
             <button
               className="btn btn-secondary"
               onClick={() => handleComponentChange(-1)}

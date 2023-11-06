@@ -29,7 +29,7 @@ const Navbar = () => {
       <div className="flex-none">
         <ul className="menu menu-horizontal bg-base-200 rounded-box">
           <li>
-            <a>
+            <a href="/">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
