@@ -2,29 +2,38 @@ import { useState } from "react";
 import Audience from "../components/Cards/Audience";
 import Content from "../components/Cards/Content";
 import Keywords from "../components/Cards/Keywords";
+import { MyContext } from "../MyContext";
 
 const components = [
   {
     id: 1,
     name: "Define your Content",
-    component: <Content />,
+    component: <Content/>,
   },
   {
     id: 2,
     name: "Specify Keywords",
-    component: <Keywords />,
+    component: <Keywords/>,
   },
   {
     id: 3,
     name: "Identify your audience",
-    component: <Audience />,
+    component: <Audience/>,
   },
 ];
 
 const Hero = () => {
   const [index, setIndex] = useState(0);
   const activeComponent = components[index];
-
+  const [data, setData] = useState({
+    content: "", 
+    length: "",
+    tone: "",
+    keywords: "",
+    audience: "",
+    language: "English",
+  });
+  
   const handleComponentChange = (increment: number) => {
     const newIndex = index + increment;
 
@@ -36,6 +45,7 @@ const Hero = () => {
   return (
     <div className="hero bg-base-200">
       <div className="hero-content p-10 w-9/12 justify-center flex flex-col text-center">
+      <MyContext.Provider value={{ data,setData}}>
         <div className="tabs">
           {components.map((comp, idx) => (
             <a
@@ -47,10 +57,15 @@ const Hero = () => {
               {comp.name}
             </a>
           ))}
-        </div>
+          </div>
+          </MyContext.Provider>
         <div className="flex flex-col gap-5 w-fit">
-          <h1 className="text-5xl font-bold mb-10 mt-5">{activeComponent.name}</h1>
-          <div className="artboard artboard-horizontal phone-1 pb-10" >{activeComponent.component}</div>
+          <h1 className="text-5xl font-bold mb-10 mt-5">
+            {activeComponent.name}
+          </h1>
+          <div className="artboard artboard-horizontal phone-1 pb-10">
+            {activeComponent.component}
+          </div>
           <div className="flex flex-row gap-5 mt-5 justify-center">
             <button
               className="btn btn-secondary"

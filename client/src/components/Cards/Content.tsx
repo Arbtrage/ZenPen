@@ -1,10 +1,20 @@
+// import { useContext } from 'react';
+// import { MyContext } from '../../MyContext';
+
 const Content = () => {
+  // const { data, setData } = useContext(MyContext);
+  // const changeValue = (value) => {
+  //   // Update the content value in the data context
+  //   setData({ ...data, content: value });
+  // };
   return (
     <div className="flex flex-col gap-4">
       <div className="text-xl font-bold">Create Content</div>
       <textarea
         className="textarea textarea-info"
         placeholder="Share your creative ideas here... 🚀🪐🌌"
+        // value={data.content} // Bind the textarea value to the content in the context
+        // onChange={(e) => changeValue(e.target.value)}
       ></textarea>
       <div className="chat chat-start">
         <div className="chat-image avatar">
